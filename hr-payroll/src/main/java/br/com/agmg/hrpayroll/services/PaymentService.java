@@ -1,33 +1,33 @@
 package br.com.agmg.hrpayroll.services;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import br.com.agmg.hrpayroll.entities.Payment;
 import br.com.agmg.hrpayroll.entities.Worker;
+import br.com.agmg.hrpayroll.feignclients.WorkerFeignClient;
 
 @Service
 public class PaymentService {
 	
-	private String workerHost;
+	//private String workerHost;
 	
-	private RestTemplate restTemplate;
+	//Vamos substituto pelo uso do Feign
+	//private RestTemplate restTemplate;
 	
-	public PaymentService(RestTemplate restTemplate, @Value("${hr-worker.host}") String workerHost) {
-		this.workerHost = workerHost;
-		this.restTemplate = restTemplate;
+	private WorkerFeignClient workerFeignClient;
+	
+	public PaymentService(WorkerFeignClient workerFeignClient) {
+		this.workerFeignClient = workerFeignClient;
 	}
 	
 	public Payment getPayment(Long workerId, int days) {
 		
-		Map <String, String> uriVariables = new HashMap<>();
-		uriVariables.put("id", String.valueOf(workerId));
+		//Map <String, String> uriVariables = new HashMap<>();
+		//uriVariables.put("id", String.valueOf(workerId));
 		
-		Worker worker = restTemplate.getForObject(workerHost + "/workers/{id}", Worker.class, uriVariables);
+		//Worker worker = restTemplate.getForObject(workerHost + "/workers/{id}", Worker.class, uriVariables);
+		
+		Worker worker = workerFeignClient.findById(workerId).getBody();
 			
 		return new Payment(worker.getName(), worker.getDailyIncome(), days);
 		
