@@ -18,3 +18,6 @@ Repositório do courso spring boot com Spring Cloud
 
 * Permitir que as configurações dos microsserviços fiquem centralizadas e externas a aplicação
 
+**Spring Boot Actuator**
+
+* Objetivo é trocar configurações em tempo de runtime
