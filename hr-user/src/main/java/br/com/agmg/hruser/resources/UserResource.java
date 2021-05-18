@@ -1,4 +1,4 @@
-package br.com.agmg.hrpayroll.hruser.resources;
+package br.com.agmg.hruser.resources;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.agmg.hrpayroll.hruser.entities.User;
-import br.com.agmg.hrpayroll.hruser.repositories.UserRepository;
+import br.com.agmg.hruser.entities.User;
+import br.com.agmg.hruser.repositories.UserRepository;
 
 @RestController
 @RequestMapping(value = "/users")

@@ -1,4 +1,4 @@
-package br.com.agmg.hrpayroll.hruser;
+package br.com.agmg.hruser;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;

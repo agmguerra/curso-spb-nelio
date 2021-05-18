@@ -1,4 +1,4 @@
-package br.com.agmg.hrpayroll.hruser.config;
+package br.com.agmg.hruser.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
