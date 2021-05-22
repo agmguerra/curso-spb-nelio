@@ -1,10 +1,16 @@
 package br.com.agmg.hroauth.entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
-public class User implements Serializable {
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+public class User implements UserDetails, Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -90,6 +96,48 @@ public class User implements Serializable {
 				return false;
 		} else if (!email.equals(other.email))
 			return false;
+		return true;
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return roles.stream().map(x -> new SimpleGrantedAuthority(x.getRoleName())).collect(Collectors.toList());
+	}
+
+	@Override
+	public String getUsername() {
+		return this.email;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		//Caso exista uma regra para tratar esse caso. Deve ser
+		//implementada aqui. Como nesse caso não existe. Retorna
+		//sempre true
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		//Caso exista uma regra para tratar esse caso. Deve ser
+		//implementada aqui. Como nesse caso não existe. Retorna
+		//sempre true
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		//Caso exista uma regra para tratar esse caso. Deve ser
+		//implementada aqui. Como nesse caso não existe. Retorna
+		//sempre true
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		//Caso exista uma regra para tratar esse caso. Deve ser
+		//implementada aqui. Como nesse caso não existe. Retorna
+		//sempre true
 		return true;
 	}
 	
