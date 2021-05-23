@@ -16,7 +16,13 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 	
 	private static final String[] PUBLIC = {"/hr-oauth/oauth/token"};
 	private static final String[] OPERATOR = {"/hr-worker/**"};
-	private static final String[] ADMIN = {"/hr-payroll/**", "hr-user/**"};
+	private static final String[] ADMIN = {
+			"/hr-payroll/**", 
+			"/hr-user/**", 
+			"/actuator/**", 
+			"/hr-oauth/users/search/**", 
+			"/hr-worker/actuator/**", 
+			"/hr-oauth/actuator/**"};
 	
 	public ResourceServerConfig(JwtTokenStore tokenStore) {
 		this.tokenStore = tokenStore;
@@ -34,6 +40,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 			.antMatchers(HttpMethod.GET, OPERATOR).hasAnyRole("OPERATOR", "ADMIN")
 			.antMatchers(ADMIN).hasRole("ADMIN")
 			.anyRequest().authenticated();
+			
 	}
 
 	

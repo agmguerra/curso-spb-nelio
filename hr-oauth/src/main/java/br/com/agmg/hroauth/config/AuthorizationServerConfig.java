@@ -1,5 +1,6 @@
 package br.com.agmg.hroauth.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,17 +20,24 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	private JwtAccessTokenConverter accessTokenConverter;
 	private JwtTokenStore tokenStore;
 	private AuthenticationManager authenticationManager;
-
+	
+	private String clientName;
+	private String clientSecret;
 	
 	public AuthorizationServerConfig(
 			BCryptPasswordEncoder passwordEncoder,
 			JwtAccessTokenConverter accessTokenConverter, 
 			JwtTokenStore tokenStore,
-			AuthenticationManager authenticationManager) {
+			AuthenticationManager authenticationManager,
+			@Value("${oauth.client.name}") String clientName,
+			@Value("${oauth.client.secret}") String clientSecret) {
+		
 		this.passwordEncoder = passwordEncoder;
 		this.accessTokenConverter = accessTokenConverter;
 		this.tokenStore = tokenStore;
 		this.authenticationManager = authenticationManager;
+		this.clientName = clientName;
+		this.clientSecret = clientSecret;
 	}
 	
 	@Override
@@ -40,8 +48,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 		clients.inMemory()
-			.withClient("myappname123")
-			.secret(passwordEncoder.encode("myappsecret123"))
+			.withClient(clientName)
+			.secret(passwordEncoder.encode(clientSecret))
 			.scopes("read", "write")
 			.authorizedGrantTypes("password")
 			.accessTokenValiditySeconds(86400);
