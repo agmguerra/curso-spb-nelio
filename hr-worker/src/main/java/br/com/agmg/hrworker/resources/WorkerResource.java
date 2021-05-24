@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
@@ -23,22 +22,21 @@ public class WorkerResource {
 
 	private static Logger logger =LoggerFactory.getLogger(WorkerResource.class);
 	
-	private String testConfig;
+//	@Value("${test.config}")
+//	private String testConfig;
 	
 	private Environment env;
 	
 	private WorkerRepository repository;
 
-	public WorkerResource(WorkerRepository repository, Environment env, @Value("${test.config}") String testConfig) {
+	public WorkerResource(WorkerRepository repository, Environment env) {
 		this.env = env;
-		this.repository = repository;
-		this.testConfig = testConfig;
-		
+		this.repository = repository;	
 	}
 	
 	@GetMapping(value = "/configs")
 	public ResponseEntity<Void> getConfigs() {		
-		logger.info("CONFIG = " + testConfig);
+//		logger.info("CONFIG = " + testConfig);
 		
 		return ResponseEntity.noContent().build();
 	}
